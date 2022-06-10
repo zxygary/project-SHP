@@ -9,7 +9,9 @@
             <p>
               <span>请</span>
               <router-link to="/login">登录</router-link>
-              <router-link to="/register" class="register">免费注册</router-link>
+              <router-link to="/register" class="register"
+                >免费注册</router-link
+              >
             </p>
           </div>
           <div class="typeList">
@@ -39,7 +41,11 @@
               class="input-error input-xxlarge"
               v-model="keyword"
             />
-            <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
+            <button
+              class="sui-btn btn-xlarge btn-danger"
+              type="button"
+              @click="goSearch"
+            >
               搜索
             </button>
           </form>
@@ -53,29 +59,25 @@ export default {
   name: "APP",
   data() {
     return {
-      keyword: ''
+      keyword: "",
     };
   },
   methods: {
     // 搜索按钮的回调函数：需要向search路由进行跳转
     goSearch() {
-      // 路由传递参数：
-      // 第一种：字符串形式
-      // this.$router.push("/search/" + this.keyword + "?k=" + this.keyword.toUpperCase())
-      // 第二种：模板字符串
-      // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
-      // 第三种：对象
-      this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-
-      /********************************************************************************************/
-      // 面试题：路由传递参数（对象写法）path是否可以结合params参数一起使用？
-      // 答：路由跳转传参的时候，对象的写法可以是name、path形式，但是需要注意的事，path这种写法不能与params参数
-      // this.$router.push({path:'/search',params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-    }
+      // 代表的是如果有query参数也带过去
+      if (this.$route.query) {
+        let location = {
+          name: "search",
+          params: { keyword: this.keyword || undefined },
+        };
+        location.query = this.$$route.query;
+        this.$router.push(location);
+      }
+    },
   },
   created() {},
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 <style lang="less" scoped>

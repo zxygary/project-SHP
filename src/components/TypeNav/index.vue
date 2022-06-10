@@ -142,6 +142,14 @@ export default {
         } else {
           query.category3id = category3id;
         }
+        // 判断：如果路由跳转的时候，带有params参数，捎带传递过去
+        if(this.$route.params){
+          location.params = this.$$route.params;
+          // 动态给location配置对象添加query属性
+          location.query = query;
+          // 路由跳转
+          this.$router.push(location);
+        }
         // 整理完参数
         location.query = query;
         // 路由跳转
@@ -156,8 +164,6 @@ export default {
   created() {},
   // 组件挂在完毕：可以向服务器发请求
   mounted() {
-    // 通知Vuex发请求，获取数据，存储于仓库当中
-    this.$store.dispatch("categoryList");
     // 如果不是Home路由组件，将typeNav进行隐藏
     if (this.$route.path != "/home") {
       this.show = false;
