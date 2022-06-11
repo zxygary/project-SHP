@@ -143,7 +143,7 @@ export default {
           query.category3id = category3id;
         }
         // 判断：如果路由跳转的时候，带有params参数，捎带传递过去
-        if(this.$route.params){
+        if (this.$route.params) {
           location.params = this.$$route.params;
           // 动态给location配置对象添加query属性
           location.query = query;
@@ -304,8 +304,8 @@ export default {
       height: 461px;
     }
     // 定义动画时间、速率
-    .sort-enter-active{
-      transition: all .5s linear;
+    .sort-enter-active {
+      transition: all 0.5s linear;
     }
   }
 }
