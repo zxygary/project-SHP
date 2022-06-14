@@ -3,23 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper" ref="mySwiper">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="(carousel, index) in bannerList"
-              :key="carousel.id"
-            >
-              <img :src="carousel.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carousel :list="bannerList"></Carousel>
       </div>
       <div class="right">
         <div class="news">
@@ -95,8 +79,6 @@
 </template>
 <script>
 import { mapState } from "vuex";
-// 引包
-import Swiper from 'swiper';
 export default {
   name: "ListContainer",
   data() {
@@ -115,35 +97,6 @@ export default {
       bannerList: (state) => state.home.bannerList,
     }),
   },
-  watch:{
-    // 监听bannerList数据的变化：因为这条数据发生过变化---由空数组变为数组里面有多个元素
-    bannerList:{
-      handler(newValue, oldValue){
-        // 通过watch监听bannerList属性的属性值的变化
-        // 如果执行handle方法，代表组件实例身上这个属性的属性已经有了
-        // 当前这个函数执行，只能保证bannerList数据已经有了，但是你没办法保证v-for已经执行结束了
-        // v-for执行完毕，才有结构
-        // nextTick: 在下次 DOM 更新，循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
-        this.$nextTick(()=>{
-          // 当你执行这个回调的时候：保证服务器数据回来了，v-for执行完毕了[一定轮播图的结构一定有了]
-          var mySwiper = new Swiper(this.$refs.mySwiper, {
-            loop: true,
-            // 如果需要分页器
-            pagination:{
-              el: ".swiper-pagination",
-              // 点击小球的时候也切换图片
-              clickable: true,
-            },
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      }
-    }
-  }
 };
 </script>
 <style lang="less" scoped>
