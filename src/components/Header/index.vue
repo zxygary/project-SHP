@@ -29,7 +29,7 @@
       <!--头部第二行 搜索区域-->
       <div class="bottom">
         <h1 class="logoArea">
-          <a class="logo" title="尚品汇" href="###" target="_blank">
+          <a class="logo" title="尚品汇" href="#">
             <img src="./images/logo.png" alt="" />
           </a>
         </h1>
@@ -71,7 +71,7 @@ export default {
           name: "search",
           params: { keyword: this.keyword || undefined },
         };
-        location.query = this.$$route.query;
+        location.query = this.$route.query;
         this.$router.push(location);
       }
     },

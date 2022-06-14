@@ -86,7 +86,7 @@ export default {
     // 第一次书写Swiper的时候，在mounted当中是不可以的，但是为什么这里可以呢？
     // 回答：现在的写法中，请求是父组件发的，父组件通过props传递过来的，而且结构都已经有了的情况下执行mounted
     // 而第一次写轮播图时，是在当前组件内部发请求、动态渲染页面结构
-    var mySwiper = new Swiper(this.$refs.cur, {
+    /* var mySwiper = new Swiper(this.$refs.cur, {
       loop: true,
       // 如果需要分页器
       pagination: {
@@ -99,7 +99,7 @@ export default {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
       },
-    });
+    }); */
   },
 };
 </script>

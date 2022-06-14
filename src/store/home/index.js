@@ -47,8 +47,8 @@ const actions = {
 // 计算属性
 const getters = {};
 export default {
-  state,
-  mutations,
-  actions,
-  getters
+  state,      // 根据接口的返回值进行数据初始化
+  mutations,  // 字符串类型事件和回调函数
+  actions,    // 与用户进行交互
+  getters     // 获取数据
 }
