@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- 商品分类三级列表 -->
     <TypeNav />
     <div class="main">
       <div class="py-container">
@@ -26,7 +25,6 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
-              <!-- 价格结构 -->
               <ul class="sui-nav">
                 <li class="active">
                   <a href="#">综合</a>
@@ -49,7 +47,6 @@
               </ul>
             </div>
           </div>
-          <!-- 销售产品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
               <li class="yui3-u-1-5">
@@ -294,7 +291,6 @@
               </li>
             </ul>
           </div>
-          <!-- 分页器 -->
           <div class="fr page">
             <div class="sui-pagination clearfix">
               <ul>
