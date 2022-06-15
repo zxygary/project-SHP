@@ -166,7 +166,7 @@ export default {
       },
     };
   },
-  // 当组件挂在完毕之前执行一次[先于mounted之前]
+  // 当组件挂载完毕之前执行一次[先于mounted之前]
   beforeMount() {
     // 复杂的写法
     /* this.searchParams.category1Id = this.$route.query.category1Id;
@@ -176,11 +176,12 @@ export default {
     this.searchParams.keyword = this.$route.params.keyword */
 
     // Object.assign: ES6新增的语法，合并对象
+    // 在发请求之前，把接口需要传递的参数进行整理
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
   },
   // 组件挂在完毕执行一次[仅仅执行一次]
   mounted() {
-    // 先测试数据范围的格式
+    // 在发请求之前带给服务器的参数
     this.getData();
   },
   computed: {
@@ -192,8 +193,22 @@ export default {
     // 把这次请求封装为一个函数：当你需要在调用的时候调用即可
     getData() {
       // 先测试数据范围的格式
-      this.$store.dispatch("getSearchList", {});
+      this.$store.dispatch("getSearchList", this.searchParams);
     },
+  },
+  // 数据监听：监听组件实例身上的属性的属性值变化
+  watch: {
+    // 监听路由的信息是否发生变化，如果发生变化，再次发起请求
+    $route(newValue, oldValue) {
+      // 再次发请求之前
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      // 再次发起ajax请求
+      this.getData();
+      // 每一次请求完毕，应该把相应的1、2、3级分类的id置空，让它们去接受下一次相应的id
+      this.searchParams.category1Id = '';
+      this.searchParams.category2Id = '';
+      this.searchParams.category3Id = '';
+    }
   },
 };
 </script>
