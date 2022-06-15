@@ -269,7 +269,7 @@ export default {
     }
     // 定义动画的时间、速率
     .sort-enter-active {
-      transition: all 0.5s linear;
+      transition: all 0.1s linear;
     }
   }
 }

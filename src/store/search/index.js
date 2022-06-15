@@ -28,7 +28,7 @@ const getters = {
     // 这样书写是有问题的
     // 加入网络状况不好，state.searchList.goodList应该返回的是undefined
     // 计算新的属性值至少需要一个数组来存储
-    return state.searchList.goodsList
+    return state.searchList.goodsList;
   },
   trademarkList(state) {
     return state.searchList.trademarkList;
