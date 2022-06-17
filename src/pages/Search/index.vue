@@ -32,7 +32,7 @@
               v-for="(attrValue, index) in searchParams.props"
               :key="index"
             >
-              {{ attrValue }}<i @click="removeTradeMark">×</i>
+              {{ attrValue.split(":")[1] }}<i @click="removeAttr(index)">×</i>
             </li>
           </ul>
         </div>
@@ -260,10 +260,20 @@ export default {
       // ["属性ID:属性值:属性名"]
       // 参数格式整理好
       let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
-      this.searchParams.props.push(props);
+      // 数组去重
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props);
+      }
       // 再次发请求
       this.getData();
     },
+    // 删除售卖的属性
+    removeAttr(index) {
+      // 再次整理参数
+      this.searchParams.props.splice(index, 1);
+      // 再次发请求
+      this.getData();
+    }
   },
   // 数据监听：监听组件实例身上的属性的属性值变化
   watch: {
