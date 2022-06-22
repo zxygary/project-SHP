@@ -45,24 +45,26 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <!-- 价格结构 -->
+              <!-- 排序的结构 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: isOne }" @click="changeOrder('1')">
+                  <a
+                    >综合<span
+                      v-show="isOne"
+                      class="iconfont"
+                      :class="{ 'icon-UP': isAsc, 'icon-DOWN': isDesc }"
+                    ></span
+                  ></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{ active: isTwo }" @click="changeOrder('2')">
+                  <a
+                    >价格<span
+                      v-show="isTwo"
+                      class="iconfont"
+                      :class="{ 'icon-UP': isAsc, 'icon-DOWN': isDesc }"
+                      >箭头</span
+                    ></a
+                  >
                 </li>
               </ul>
             </div>
@@ -171,8 +173,8 @@ export default {
         categoryName: "",
         // 关键字
         keyword: "",
-        // 排序
-        order: "",
+        // 排序:初始状态应该是综合且降序
+        order: "1:desc",
         // 分页器用的参数：代表现在是第几页
         pageNo: 1,
         // 分页器用的参数：代表的是每页展示几个数
@@ -205,6 +207,18 @@ export default {
   computed: {
     // mapGetters里面的写法：传递的数组，因为getters计算是没有划分模块[home, search]
     ...mapGetters(["goodsList"]),
+    isOne() {
+      return this.searchParams.order.indexOf("1") != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
+    },
+    isAsc() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
   },
   methods: {
     // 向服务器发请求获取search模块数据（根据参数不同返回不同的数据进行展示）
@@ -273,7 +287,12 @@ export default {
       this.searchParams.props.splice(index, 1);
       // 再次发请求
       this.getData();
-    }
+    },
+    // 排序的操作
+    changeOrder(flag) {
+      // flag形参：它是一个标记，代表用户点击的是综合（1）价格（2）[用户点击的时候传递进来的]
+      console.log(flag);
+    },
   },
   // 数据监听：监听组件实例身上的属性的属性值变化
   watch: {
