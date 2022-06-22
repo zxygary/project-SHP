@@ -62,7 +62,7 @@
                       v-show="isTwo"
                       class="iconfont"
                       :class="{ 'icon-UP': isAsc, 'icon-DOWN': isDesc }"
-                      >箭头</span
+                      ></span
                     ></a
                   >
                 </li>
@@ -291,7 +291,23 @@ export default {
     // 排序的操作
     changeOrder(flag) {
       // flag形参：它是一个标记，代表用户点击的是综合（1）价格（2）[用户点击的时候传递进来的]
-      console.log(flag);
+      let originOrder = this.searchParams.order;
+      // 这里获取到的是最开始的状态
+      let originFlag = this.searchParams.order.split(":")[0];
+      let originSort = this.searchParams.order.split(":")[1];
+      // 准备一个新的order属性值
+      let newOrder = '';
+      // 点击的是综合
+      if(flag==originFlag){
+        newOrder = `${originFlag}:${originSort=="desc"?"asc":"desc"}`;
+      }else{
+        // 点击的是价格
+        newOrder = `${flag}:${'desc'}`;
+      }
+      // 将新的order赋予searchParams
+      this.searchParams.order = newOrder;
+      // 再次发请求
+      this.getData();
     },
   },
   // 数据监听：监听组件实例身上的属性的属性值变化
