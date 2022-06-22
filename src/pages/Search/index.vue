@@ -115,36 +115,8 @@
               </li>
             </ul>
           </div>
-          <!-- 分页器 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <!-- 分页器:测试分页器阶段，这里的数据将来需要替换的 -->
+          <Pagination :pageNo="1" :pageSize="3" :total="10" :continues="5" />
         </div>
       </div>
     </div>
@@ -154,10 +126,12 @@
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
 import { mapGetters } from "vuex";
+import Pagination from "../../components/Pagination/index.vue"
 export default {
   name: "Search",
   components: {
     SearchSelector,
+    Pagination
   },
   data() {
     return {
