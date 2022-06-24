@@ -22,7 +22,7 @@
               {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
             </li>
             <!-- 品牌的面包屑 -->
-            <li class="with-x" v-if="searchParams.trademark">
+            <li class="with-x" v-if="searchParams.trademark">   
               {{ searchParams.trademark.split(":")[1]
               }}<i @click="removeTradeMark">×</i>
             </li>
@@ -116,7 +116,7 @@
             </ul>
           </div>
           <!-- 分页器:测试分页器阶段，这里的数据将来需要替换的 -->
-          <Pagination :pageNo="1" :pageSize="3" :total="10" :continues="5" />
+          <Pagination :pageNo="6" :pageSize="3" :total="100" :continues="5" @getPaageNo="getPaageNo"/>
         </div>
       </div>
     </div>
@@ -125,13 +125,11 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
-import Pagination from "../../components/Pagination/index.vue"
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   components: {
     SearchSelector,
-    Pagination
   },
   data() {
     return {
@@ -193,6 +191,9 @@ export default {
     isDesc() {
       return this.searchParams.order.indexOf("desc") != -1;
     },
+    ...mapState({
+      total:state=>state.search.searchList.total
+    })
   },
   methods: {
     // 向服务器发请求获取search模块数据（根据参数不同返回不同的数据进行展示）
@@ -283,6 +284,10 @@ export default {
       // 再次发请求
       this.getData();
     },
+    // 自定义事件的回调函数---获取当前是第几页
+    getPageNo(pageNo){
+      console.log(pageNo);
+    }
   },
   // 数据监听：监听组件实例身上的属性的属性值变化
   watch: {

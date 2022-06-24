@@ -1,8 +1,10 @@
 <template>
   <div class="pagination">
     <!-- 上 -->
-    <button>上一页</button>
-    <button v-if="startNumAndEndNum.start > 1">1</button>
+    <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">
+      上一页
+    </button>
+    <button v-if="startNumAndEndNum.start > 1" @click="$emit('getPageNo', 1)">1</button>
     <button v-if="startNumAndEndNum.start > 2">···</button>
 
     <!-- 中 -->
@@ -15,7 +17,7 @@
     </button>
 
     <!-- 下 -->
-    <button v-if="startNumAndEndNum.end < totalPage - 1 ">···</button>
+    <button>···</button>
     <button v-if="startNumAndEndNum.end < totalPage">{{ totalPage }}</button>
     <button>下一页</button>
 
@@ -35,16 +37,17 @@ export default {
     },
     // 计算出连续的页码的起始数字与结束数字[连续页码的数字:至少是5]
     startNumAndEndNum() {
+      const { continues, pageNo, totalPage } = this;
       // 先定义两个变量存储起始数字与结束数字
       let start = 0,
         end = 0;
-      // 连续页码数字5[就是至少五页]:如果出现不正常的现象[就是不够五页]
-      // 总页数没有连续页码多的情况
+      // 连续页码数字5[就是至少五页]，如果出现不正常的现象[就是不够五页]
+      // 不正常现象[总页数没有连续页码多]
       if (continues > totalPage) {
         start = 1;
         end = totalPage;
       } else {
-        // 正常现象[连续页码5，但你的总页数一定是大于5的]
+        // 正常现象[连续页码5，但是总页数一定是大于5的]
         // 起始数字
         start = pageNo - parseInt(continues / 2);
         // 结束数字
