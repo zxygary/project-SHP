@@ -4,7 +4,9 @@
     <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">
       上一页
     </button>
-    <button v-if="startNumAndEndNum.start > 1" @click="$emit('getPageNo', 1)">1</button>
+    <button v-if="startNumAndEndNum.start > 1" @click="$emit('getPageNo', 1)">
+      1
+    </button>
     <button v-if="startNumAndEndNum.start > 2">···</button>
 
     <!-- 中 -->
@@ -12,14 +14,25 @@
       v-for="(page, index) in startNumAndEndNum.end"
       :key="index"
       v-if="page >= startNumAndEndNum.start"
+      @click="$emit('getPageNo', page)"
     >
       {{ page }}
     </button>
 
     <!-- 下 -->
-    <button>···</button>
-    <button v-if="startNumAndEndNum.end < totalPage">{{ totalPage }}</button>
-    <button>下一页</button>
+    <button v-if="startNumAndEndNum.end < totalPage - 1">···</button>
+    <button
+      v-if="startNumAndEndNum.end < totalPage"
+      @click="$emit('getPageNo', totalPage)"
+    >
+      {{ totalPage }}
+    </button>
+    <button
+      :disabled="pageNo == totalPage"
+      @click="$emit('getPageNo', pageNo - 1)"
+    >
+      下一页
+    </button>
 
     <button style="margin-left: 30px">共 {{ total }} 条</button>
   </div>

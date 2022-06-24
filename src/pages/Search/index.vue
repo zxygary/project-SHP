@@ -22,7 +22,7 @@
               {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
             </li>
             <!-- 品牌的面包屑 -->
-            <li class="with-x" v-if="searchParams.trademark">   
+            <li class="with-x" v-if="searchParams.trademark">
               {{ searchParams.trademark.split(":")[1]
               }}<i @click="removeTradeMark">×</i>
             </li>
@@ -62,9 +62,8 @@
                       v-show="isTwo"
                       class="iconfont"
                       :class="{ 'icon-UP': isAsc, 'icon-DOWN': isDesc }"
-                      ></span
-                    ></a
-                  >
+                    ></span
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -116,7 +115,13 @@
             </ul>
           </div>
           <!-- 分页器:测试分页器阶段，这里的数据将来需要替换的 -->
-          <Pagination :pageNo="6" :pageSize="3" :total="100" :continues="5" @getPaageNo="getPaageNo"/>
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -191,9 +196,13 @@ export default {
     isDesc() {
       return this.searchParams.order.indexOf("desc") != -1;
     },
+    // 获取search模块展示产品一共多少条数据
     ...mapState({
-      total:state=>state.search.searchList.total
-    })
+      total:state=>state.search.searchList.total,
+    }),
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+    }),
   },
   methods: {
     // 向服务器发请求获取search模块数据（根据参数不同返回不同的数据进行展示）
@@ -271,13 +280,13 @@ export default {
       let originFlag = this.searchParams.order.split(":")[0];
       let originSort = this.searchParams.order.split(":")[1];
       // 准备一个新的order属性值
-      let newOrder = '';
+      let newOrder = "";
       // 点击的是综合
-      if(flag==originFlag){
-        newOrder = `${originFlag}:${originSort=="desc"?"asc":"desc"}`;
-      }else{
+      if (flag == originFlag) {
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
         // 点击的是价格
-        newOrder = `${flag}:${'desc'}`;
+        newOrder = `${flag}:${"desc"}`;
       }
       // 将新的order赋予searchParams
       this.searchParams.order = newOrder;
@@ -285,9 +294,12 @@ export default {
       this.getData();
     },
     // 自定义事件的回调函数---获取当前是第几页
-    getPageNo(pageNo){
-      console.log(pageNo);
-    }
+    getPageNo(pageNo) {
+      // 整理带给服务器参数
+      this.searchParams.pageNo = pageNo;
+      // 再次发请求
+      this.getData();
+    },
   },
   // 数据监听：监听组件实例身上的属性的属性值变化
   watch: {
