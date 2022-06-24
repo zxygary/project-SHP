@@ -146,7 +146,7 @@ export default {
         category2Id: "",
         // 三级分类id
         category3Id: "",
-        // 分类名字
+        // 分类名字 
         categoryName: "",
         // 关键字
         keyword: "",
